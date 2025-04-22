@@ -4,11 +4,9 @@ import com.br.workshopmongodb.dto.UserDTO;
 import com.br.workshopmongodb.entity.User;
 import com.br.workshopmongodb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,5 +33,13 @@ public class UserController {
 
         User obj = service.findById(id);
         return ResponseEntity.ok().body(new UserDTO(obj));
+    }
+
+    @PostMapping
+    public ResponseEntity<User> CreateUser(@RequestBody UserDTO objDto){
+
+        User obj = service.fromDTO(objDto);
+
+        return new ResponseEntity<>(service.insert(obj), HttpStatus.CREATED);
     }
 }
