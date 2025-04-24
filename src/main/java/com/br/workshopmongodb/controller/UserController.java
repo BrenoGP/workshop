@@ -1,6 +1,7 @@
 package com.br.workshopmongodb.controller;
 
 import com.br.workshopmongodb.dto.UserDTO;
+import com.br.workshopmongodb.entity.Post;
 import com.br.workshopmongodb.entity.User;
 import com.br.workshopmongodb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,13 @@ public class UserController {
 
         User obj = service.findById(id);
         return ResponseEntity.ok().body(new UserDTO(obj));
+    }
+
+    @GetMapping("/{id}/posts")
+    public ResponseEntity<List<Post>> FindPosts(@PathVariable String id){
+
+        User obj = service.findById(id);
+        return ResponseEntity.ok().body(obj.getPosts());
     }
 
     @PostMapping
