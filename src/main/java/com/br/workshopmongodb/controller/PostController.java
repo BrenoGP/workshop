@@ -1,5 +1,6 @@
 package com.br.workshopmongodb.controller;
 
+import com.br.workshopmongodb.controller.util.URL;
 import com.br.workshopmongodb.dto.UserDTO;
 import com.br.workshopmongodb.entity.Post;
 import com.br.workshopmongodb.entity.User;
@@ -32,6 +33,14 @@ public class PostController {
 
         Post obj = service.findById(id);
         return ResponseEntity.ok().body(obj);
+    }
+
+    @GetMapping("/titlesearch")
+    public ResponseEntity<List<Post>> FindByTitle(@RequestParam(value ="text", defaultValue = "") String text){
+        text = URL.decodeParam(text);
+        List<Post> list = service.findByTitle(text);
+
+        return ResponseEntity.ok().body(list);
     }
 
 }
